@@ -65,12 +65,6 @@ class Running(Training):
     CALORIES_MEAN_SPEED_MULTIPLIER: int = 18
     CALORIES_MEAN_SPEED_SHIFT: float = 1.79
 
-    def __init__(self, action: int,
-                 duration: int,
-                 weight: float
-                 ) -> None:
-        super().__init__(action, duration, weight)
-
     def get_spent_calories(self) -> float:
         """Получить количество затраченных калорий."""
         return ((self.CALORIES_MEAN_SPEED_MULTIPLIER * self.get_mean_speed()
@@ -134,7 +128,7 @@ def read_package(workout_type: str, data: list) -> Training:
         "WLK": SportsWalking
     }
     if workout_type not in types_of_training:
-        return "Код тренировки не найден"
+        raise ValueError
     return types_of_training[workout_type](*data)
 
 
